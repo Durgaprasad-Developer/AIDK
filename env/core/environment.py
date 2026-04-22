@@ -155,7 +155,7 @@ class GridEnv:
             rewards.append(reward)
             dones.append(self.energies[i] <= 0)
 
-        episode_done = self.step_count >= 80 or all(dones)
+        episode_done = self.step_count >= self.max_energy or all(dones)
         info = {"deliveries": deliv_in_step, "total_deliveries": self.total_deliveries, "step_count": self.step_count, "collision_rate": self.collisions / self.step_count}
         return [self.get_elite_state(j) for j in range(self.num_agents)], rewards, episode_done, info
 

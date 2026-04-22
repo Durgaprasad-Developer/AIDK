@@ -32,7 +32,7 @@ def run_benchmark(seeds=[1, 7, 42, 99, 123]):
         trained_q = pickle.load(f)
     print(f"✅ Loaded Knowledge Base: {len(trained_q)} entries.")
     
-    trained_agent = QLearningAgent(actions=[0,1,2,3,4,5,6], shared_q_table=trained_q)
+    trained_agent = QLearningAgent(actions=[0,1,2,3,4,5,6], shared_q_table=trained_q, epsilon=0)
     
     # 2. Results storage
     random_deliveries = []
