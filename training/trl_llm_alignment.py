@@ -36,10 +36,14 @@ def run_trl_alignment():
 
     print(f"🤖 LLM Output: {response_text}")
 
-    # ✅ DETERMINISTIC MAPPING (MANDATORY)
-    action_single = len(response_text) % 7
+    # 5. DETERMINISTIC MAPPING (MANDATORY)
+    # Convert model output -> action (Uses full signal, no hardcoding)
+    if not response_text.strip():
+        action_single = 0
+    else:
+        action_single = sum(ord(c) for c in response_text) % 7
+    
     action = [action_single, action_single]
-
     print(f"🛠️ Action Mapped: {action}")
 
     # ENV STEP

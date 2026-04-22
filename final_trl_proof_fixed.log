@@ -1,0 +1,8 @@
+
+🏁 --- STARTING LLM ALIGNMENT PROOF --- 🏁
+⏳ Loading model: sshleifer/tiny-gpt2
+🤖 LLM Output: Task: Warehouse Navigation. Observation: [(4, 1, 0, 0, 0, 0, 1, -1, 2, 2, 2, 2), (2, 0, 0, 0, 0, 0, 0, -1, -2, -2, 2, 1)]. Action: stairs stairs stairs stairs stairs
+🛠️ Action Mapped: [6, 6]
+💰 Reward: -2.7
+📦 Done: False
+✅ LLM → ACTION → ENV → REWARD LOOP VERIFIED

@@ -166,7 +166,8 @@ def step(input: ActionInput):
 
     return {
         "observation": _build_obs(env),
-        "rewards": rewards,
+        "reward": float(sum(rewards)),
+        "agent_rewards": rewards,
         "done": bool(done),
         "info": info
     }
