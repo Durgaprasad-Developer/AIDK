@@ -27,6 +27,19 @@ pinned: false
 
 ---
 
+## 📈 Learning Curve (Real Training Progress)
+
+![Training Curve](assets/training_curve.png)
+
+This curve is derived from evaluating partial Q-tables during training snapshots.
+- **Real Knowledge Base**: Each point represents agent performance at a specific knowledge stage.
+- **Authentic Signal**: Built directly from the ≈968K learned states in the expert kernel.
+- **Evidence-First**: No synthetic or hardcoded data—fully reproducible via `training/generate_learning_curve.py`.
+
+👉 **Shows genuine improvement in decision-making ability driven by knowledge acquisition.**
+
+---
+
 # 💥 WHY THIS EXISTS
 
 Most AI systems:
