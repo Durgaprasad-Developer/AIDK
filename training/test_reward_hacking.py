@@ -93,10 +93,21 @@ def test_reward_hacking():
 
         print(f"{name:<12} | Reward: {avg_r:>7.2f} | Deliveries: {avg_d:>4.2f}")
 
-    # 🔥 VALIDATION LOGIC
-    assert results["EXPERT"][1] > results["RANDOM"][1], "Expert not better than random"
-    assert results["IDLE"][0] <= results["EXPERT"][0], "Idle exploiting reward"
-    assert results["OSCILLATION"][0] <= results["EXPERT"][0], "Oscillation exploiting reward"
+    # ---------------- VALIDATION ----------------
+
+    exp_r, exp_d = results["EXPERT"]
+    rand_r, rand_d = results["RANDOM"]
+    idle_r, idle_d = results["IDLE"]
+    osc_r, osc_d = results["OSCILLATION"]
+
+    # ✅ 1. Expert must be best at task
+    assert exp_d > rand_d, "Expert not better than random"
+    assert exp_d > osc_d, "Oscillation achieving deliveries (BAD)"
+    assert exp_d > idle_d, "Idle achieving deliveries (BAD)"
+
+    # ✅ 2. Bad policies must NOT exploit reward
+    assert idle_r <= 0, "Idle policy getting positive reward (BAD)"
+    assert osc_r <= 0, "Oscillation exploiting reward (BAD)"
 
     print("\n✅ REWARD SYSTEM IS ROBUST (NO EXPLOITATION)")
 
