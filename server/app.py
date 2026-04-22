@@ -3,7 +3,7 @@
 from fastapi import FastAPI, HTTPException, Body
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import Any, List
+from typing import Optional, Any, List
 import os, sys, glob, base64
 
 # ================================
