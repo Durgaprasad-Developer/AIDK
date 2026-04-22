@@ -3,32 +3,33 @@
 from fastapi import FastAPI, HTTPException, Body
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import Optional, Any, List
-import os, sys
-
+from typing import Any, List
 import os, sys, glob, base64
 
+# ================================
+# 🛡️ MODEL REASSEMBLY (HF SAFE)
+# ================================
 def _reassemble_model():
-    """🛡️ Deployment Bypass: Reassemble Base64 chunked Q-table"""
     master_path = "models/asymmetric_v15_q_table.pkl"
     chunk_pattern = "models/chunks/bin_*.txt"
     
     if not os.path.exists(master_path):
         chunks = sorted(glob.glob(chunk_pattern))
         if chunks:
-            print(f"📦 Reassembling model from {len(chunks)} Base64 chunks...")
+            print(f"📦 Reassembling model from {len(chunks)} chunks...")
             with open(master_path, "wb") as f_out:
                 for chunk in chunks:
                     with open(chunk, "r") as f_in:
-                        # 🧬 Decode Base64 text back to binary
-                        binary_data = base64.b64decode(f_in.read())
-                        f_out.write(binary_data)
-            print("✅ Model reassembled successfully.")
+                        f_out.write(base64.b64decode(f_in.read()))
+            print("✅ Model ready.")
         else:
-            print("⚠️ No model or Base64 chunks found.")
+            print("⚠️ No model found.")
 
 _reassemble_model()
 
+# ================================
+# 📦 IMPORT PROJECT
+# ================================
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from env.core.environment import GridEnv
@@ -36,26 +37,41 @@ from env.tasks.easy import get_task as easy_task
 from env.tasks.medium import get_task as medium_task
 from env.tasks.hard import get_task as hard_task
 
+# ================================
+# 🚀 FASTAPI (FIXED DOCS)
+# ================================
 app = FastAPI(
     title="AIDK API",
-    description="Autonomous Industrial Decision Kernel (V15) - Professional Multi-Agent RL Engine",
-    version="1.0.0"
+    description="Autonomous Industrial Decision Kernel (Multi-Agent RL)",
+    version="1.0",
+    docs_url="/docs",        # ✅ FORCE ENABLE
+    redoc_url="/redoc",
+    openapi_url="/openapi.json"
 )
 
+# ================================
+# 🏠 ROOT (NO MORE 'NOT FOUND')
+# ================================
 @app.get("/")
 def home():
     return {
         "status": "AIDK Running ✅",
-        "message": "Autonomous Industrial Decision Kernel API is live.",
-        "endpoints": [
-            "/docs",
-            "/reset",
-            "/step",
-            "/grader",
-            "/reason"
-        ]
+        "message": "Multi-Agent RL System Active",
+        "try_docs": "/docs",
+        "health": "/health",
+        "endpoints": ["/reset", "/step", "/grader", "/reason"]
     }
 
+# ================================
+# ❤️ HEALTH CHECK (IMPORTANT FOR HF)
+# ================================
+@app.get("/health")
+def health():
+    return {"status": "healthy"}
+
+# ================================
+# 🌐 CORS
+# ================================
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -64,6 +80,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ================================
+# 🧠 TASK REGISTRY
+# ================================
 TASK_REGISTRY = {
     "easy": easy_task,
     "medium": medium_task,
@@ -72,11 +91,13 @@ TASK_REGISTRY = {
 
 env = None
 
-def _get_agent_obs(env, agent_idx) -> dict:
-    """🧠 V14 WINNING OBS (11 Elements)"""
+# ================================
+# 👁️ OBSERVATION
+# ================================
+def _get_agent_obs(env, agent_idx):
     state = env.get_elite_state(agent_idx)
     ax, ay = env.agents_pos[agent_idx]
-    
+
     return {
         "dx": int(state[0]),
         "dy": int(state[1]),
@@ -94,7 +115,7 @@ def _get_agent_obs(env, agent_idx) -> dict:
         "energy": int(env.energies[agent_idx])
     }
 
-def _build_obs_v14(env) -> dict:
+def _build_obs(env):
     return {
         "agents": [_get_agent_obs(env, i) for i in range(env.num_agents)],
         "grid_size": env.grid_size,
@@ -102,56 +123,85 @@ def _build_obs_v14(env) -> dict:
         "task_pool_count": len(env.task_pool)
     }
 
+# ================================
+# 📥 INPUT
+# ================================
 class ActionInput(BaseModel):
     actions: List[int]
 
+# ================================
+# 🔄 RESET
+# ================================
 @app.post("/reset")
 def reset(data: Any = Body(None)):
     global env
     task_id = (data.get("task") if data else "easy") or "easy"
     seed = data.get("seed") if data else None
-    task_fn = TASK_REGISTRY.get(task_id, easy_task)
-    task = task_fn()
-    env = GridEnv(task, num_agents=2)
-    env.task_id = task_id 
-    env.reset(seed=seed)
-    return {"observation": _build_obs_v14(env)}
 
+    task = TASK_REGISTRY.get(task_id, easy_task)()
+    env = GridEnv(task, num_agents=2)
+    env.reset(seed=seed)
+
+    return {"observation": _build_obs(env)}
+
+# ================================
+# ▶️ STEP
+# ================================
 @app.post("/step")
 def step(input: ActionInput):
     global env
-    if not env: raise HTTPException(status_code=400, detail="Not initialized")
-    obs_list, rewards, done, info = env.step(input.actions)
+    if not env:
+        raise HTTPException(status_code=400, detail="Not initialized")
+
+    _, rewards, done, info = env.step(input.actions)
+
     return {
-        "observation": _build_obs_v14(env),
+        "observation": _build_obs(env),
         "rewards": rewards,
         "done": bool(done),
         "info": info
     }
 
+# ================================
+# 🤖 REASON
+# ================================
 @app.post("/reason")
 def reason(agent_idx: int = 0):
     global env
-    if not env: return {"reasoning": "System not initialized."}
-    state = env.get_elite_state(agent_idx)
-    reasoning = f"Protocol V14: Agent {agent_idx} reporting. "
-    if state[10] == 0: 
-        reasoning += "Operational capacity critical. Routing to nearest power node. "
-    elif abs(state[8]) < 2 and abs(state[9]) < 2:
-        reasoning += "Proximity congestion detected. Adjusting vector for spatial separation. "
-    return {"reasoning": reasoning}
+    if not env:
+        return {"reasoning": "System not initialized."}
 
+    state = env.get_elite_state(agent_idx)
+
+    if state[10] == 0:
+        msg = "Low energy → seeking recharge"
+    elif abs(state[8]) < 2:
+        msg = "Avoiding nearby agent"
+    else:
+        msg = "Proceeding to target"
+
+    return {"reasoning": msg}
+
+# ================================
+# 📊 GRADER
+# ================================
 @app.post("/grader")
 def grader(data: Any = Body(None)):
     global env
-    if not env: return {"score": 0.0}
-    # ⚖️ V14 Grader: Tougher criteria (Requires efficiency)
+    if not env:
+        return {"score": 0.0}
+
     score = 0.0
     if env.total_deliveries > 0:
         score = 0.5 + (env.total_deliveries * 0.15)
-        if env.collisions / env.step_count < 0.1: score += 0.2
+        if env.collisions / max(env.step_count, 1) < 0.1:
+            score += 0.2
+
     return {"score": min(score, 1.0)}
 
+# ================================
+# 🚀 LOCAL RUN
+# ================================
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=7860)
