@@ -44,11 +44,11 @@ class AIDKEnv(Environment):
 
 if __name__ == "__main__":
     # Internal Validation
-    env = AIDKEnv()
-    obs = env.reset(seed=1)
-    print(f"AIDKEnv Reset Successful. Initial Obs: {obs}")
-    state = env.state
-    print(f"Current State Check: {state}")
-    # Sample step (2-agent actions)
-    next_obs, rew, done, info = env.step([0, 1])
-    print(f"Step Result: Done={done}, Delivs={info['total_deliveries']}")
+    wrapper = AIDKEnv()
+    res_reset = wrapper.reset(seed=1)
+    print(f"AIDKEnv Reset Successful. Initial Obs: {res_reset}")
+    
+    print(f"Current State Check: {wrapper.state}")
+    
+    res_step = wrapper.step([1, 1])
+    print(f"Step Result: Done={res_step['done']}, Delivs={res_step['info']['total_deliveries']}")
