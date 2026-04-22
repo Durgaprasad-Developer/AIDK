@@ -36,7 +36,25 @@ from env.tasks.easy import get_task as easy_task
 from env.tasks.medium import get_task as medium_task
 from env.tasks.hard import get_task as hard_task
 
-app = FastAPI()
+app = FastAPI(
+    title="AIDK API",
+    description="Autonomous Industrial Decision Kernel (V15) - Professional Multi-Agent RL Engine",
+    version="1.0.0"
+)
+
+@app.get("/")
+def home():
+    return {
+        "status": "AIDK Running ✅",
+        "message": "Autonomous Industrial Decision Kernel API is live.",
+        "endpoints": [
+            "/docs",
+            "/reset",
+            "/step",
+            "/grader",
+            "/reason"
+        ]
+    }
 
 app.add_middleware(
     CORSMiddleware,
