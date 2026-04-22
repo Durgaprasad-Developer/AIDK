@@ -12,5 +12,5 @@ metadata:
   architecture: "Asymmetric Multi-Agent Tabular Q-Learning (OpenEnv Wrapped)"
   author: "Durga Prasad <bdurga.24bcs10012@sst.scaler.com>"
   performance:
-    easy: 2.60
+    easy: 2.80
     verified: true

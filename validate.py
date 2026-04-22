@@ -5,7 +5,7 @@ import os, sys
 # 🧠 Add root to path
 sys.path.insert(0, os.getcwd())
 
-BASE = os.getenv("BASE_URL", "http://localhost:7860")
+BASE = os.getenv("BASE_URL", "https://bdurgaprasadreddy-navigation-env.hf.space")
 
 def test_env_wrapper():
     print("⏳ Testing ENV WRAPPER...")

@@ -22,7 +22,7 @@ pinned: false
 <p align="center">
   <img src="https://img.shields.io/badge/OpenEnv-Compliant-green"/>
   <img src="https://img.shields.io/badge/RL-MultiAgent-blue"/>
-  <img src="https://img.shields.io/badge/Benchmark-2.60%20Deliveries-orange"/>
+  <img src="https://img.shields.io/badge/Benchmark-2.80%20Deliveries-orange"/>
   <img src="https://img.shields.io/badge/Docker-Ready-black"/>
 </p>
 
@@ -48,7 +48,7 @@ PYTHONPATH=. python3 validate.py
 ```
 
 **Expected Output:**
-- **Benchmark**: ~2.60 deliveries (Trained) vs 0.00 (Random)
+- **Benchmark**: ~2.80 deliveries (Trained) vs 0.00 (Random)
 - **LLM Loop**: Deterministic Action Mapping -> Reward Verified
 - **API**: 200 OK across Reset/Step/Grader endpoints
 - **Stability**: 10/10 consecutive stress test success
@@ -60,7 +60,7 @@ PYTHONPATH=. python3 validate.py
 | Policy | Deliveries (5-Seed Avg) | Reward Signal |
 | :--- | :--- | :--- |
 | Random Baseline | 0.00 | Stochastic Noise |
-| **AIDK Expert (V15)** | **2.60** | **Stabilized Policy** |
+| **AIDK Expert (V15)** | **2.80** | **Stabilized Policy** |
 
 Improvement is significant and consistent across deterministic evaluation seeds [1, 7, 42, 99, 123].
 

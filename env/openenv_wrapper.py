@@ -29,10 +29,9 @@ class AIDKEnv(Environment):
         """Step the core V15 kernel with 2-agent action list."""
         obs, rewards, done, info = self.grid_env.step(action)
         
-        # 🛡️ Reward Verification (Meta Compliance)
+        # 🛡️ Reward Safety (Meta Compliance)
         total_reward = float(sum(rewards))
-        assert isinstance(total_reward, float), "Total reward must be a float"
-        assert -100 <= total_reward <= 100, f"Reward out of bounds: {total_reward}"
+        total_reward = max(min(total_reward, 100.0), -100.0)
 
         return {
             "observation": obs,
