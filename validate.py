@@ -5,7 +5,7 @@ import os, sys
 # 🧠 Add root to path
 sys.path.insert(0, os.getcwd())
 
-BASE = "http://localhost:7860"
+BASE = os.getenv("BASE_URL", "http://localhost:7860")
 
 def test_env_wrapper():
     print("⏳ Testing ENV WRAPPER...")
@@ -30,14 +30,12 @@ def test_api():
 
 def test_benchmark():
     print("⏳ Running BENCHMARK...")
-    subprocess.run(["python3", "training/benchmark.py"], check=True)
+    subprocess.run([sys.executable, "training/benchmark.py"], check=True)
     print("✅ BENCHMARK OK")
 
 def test_trl():
     print("⏳ Running TRL integration test...")
-    # TRL might fail due to torch/transformers weight loading, wrap in check=False or try block if needed
-    # User said they want real logic, so we run the script
-    subprocess.run(["python3", "training/trl_llm_alignment.py"], check=True)
+    subprocess.run([sys.executable, "training/trl_llm_alignment.py"], check=True)
     print("✅ TRL OK")
 
 if __name__ == "__main__":

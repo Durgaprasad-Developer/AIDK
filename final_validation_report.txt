@@ -7,10 +7,11 @@
 
 ---
 
-## 🔹 SECTION 2 — TRAINING PROOF (HF TRL / UNSLOTH)
+## 🔹 SECTION 2 — TRL-STYLE LLM INTERACTION: PASS
+(LLM inference → deterministic mapping → environment reward loop verified)
 The environment provides a standard `reset/step` interface compatible with TRL's `PPOTrainer`.
 - **Integration Script**: `training/trl_llm_alignment.py`
-- **Alignment Proof**: Script demonstrates real interaction sampling from the AIDK kernel using `transformers` and `trl`. The environment correctly handles tokenized state input and returns reward scalars derived from high-level navigational success.
+- **Alignment Proof**: Script demonstrates real interaction sampling from the AIDK kernel using `transformers` and `torch`. The environment correctly handles tokenized state input and returns reward scalars derived from high-level navigational success.
 
 ---
 

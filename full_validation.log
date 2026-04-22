@@ -1,7 +1,32 @@
-🚀 RUNNING FULL VALIDATION...
 
-⏳ Testing ENV WRAPPER...
-✅ ENV WRAPPER OK
-⏳ Testing API (Requires server running at 7860)...
-✅ API OK
-⏳ Running BENCHMARK...
+🚩 AIDK BRUTAL BENCHMARK: Random vs Trained 🚩
+==================================================
+✅ Loaded Knowledge Base: 968962 entries.
+Testing Random Baseline (150 steps)...
+Seed 1 (R): 0 delivs
+Seed 7 (R): 0 delivs
+Seed 42 (R): 0 delivs
+Seed 99 (R): 0 delivs
+Seed 123 (R): 0 delivs
+
+Testing Trained Expert (150 steps)...
+Seed 1 (T): 3 delivs
+Seed 7 (T): 2 delivs
+Seed 42 (T): 2 delivs
+Seed 99 (T): 3 delivs
+Seed 123 (T): 3 delivs
+
+==================================================
+Seed       | Random          | Trained        
+--------------------------------------------------
+1          | 0               | 3              
+7          | 0               | 2              
+42         | 0               | 2              
+99         | 0               | 3              
+123        | 0               | 3              
+--------------------------------------------------
+AVERAGE    | 0.00            | 2.60           
+==================================================
+🚀 TECHNICAL IMPROVEMENT: 260000000.0%
+==================================================
+
