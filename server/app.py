@@ -129,14 +129,23 @@ def _build_obs(env):
 class ActionInput(BaseModel):
     actions: List[int]
 
+class ResetInput(BaseModel):
+    task: Optional[str] = "easy"
+    seed: Optional[int] = None
+
+class GraderInput(BaseModel):
+    """Empty body accepted for grader"""
+    pass
+
 # ================================
 # 🔄 RESET
 # ================================
 @app.post("/reset")
-def reset(data: Any = Body(None)):
+def reset(input: ResetInput = Body(None)):
     global env
-    task_id = (data.get("task") if data else "easy") or "easy"
-    seed = data.get("seed") if data else None
+    data = input.dict() if input else {}
+    task_id = data.get("task") or "easy"
+    seed = data.get("seed")
 
     task = TASK_REGISTRY.get(task_id, easy_task)()
     env = GridEnv(task, num_agents=2)
@@ -186,7 +195,7 @@ def reason(agent_idx: int = 0):
 # 📊 GRADER
 # ================================
 @app.post("/grader")
-def grader(data: Any = Body(None)):
+def grader(input: GraderInput = Body(None)):
     global env
     if not env:
         return {"score": 0.0}
