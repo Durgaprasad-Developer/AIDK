@@ -1,3 +1,13 @@
+---
+title: AIDK Navigation Env
+emoji: 🚀
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_file: app.py
+pinned: false
+---
+
 🚀 AIDK — Autonomous Industrial Decision Kernel
 
 A multi-agent reinforcement learning environment for training AI systems in long-horizon coordination, planning, and real-world logistics decision-making.
