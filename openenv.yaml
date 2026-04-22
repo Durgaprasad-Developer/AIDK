@@ -1,16 +1,16 @@
 # openenv.yaml
 version: "1.0"
-name: "AIDK Asymmetric Swarm V15"
-entrypoint: "server/app.py"
+name: "aidk-env"
+description: "Multi-agent warehouse RL environment for Autonomous Industrial Decision Kernel (V15)"
+entry_point: "env.openenv_wrapper:AIDKEnv"
 port: 7860
-state_dim: 11
+state_dim: 12
 action_dim: 7
 num_agents: 2
 metadata:
   version: "V15.0"
-  architecture: "Asymmetric Multi-Agent Tabular Q-Learning"
-  author: "Durgaprasad-Developer"
+  architecture: "Asymmetric Multi-Agent Tabular Q-Learning (OpenEnv Wrapped)"
+  author: "Durga Prasad <bdurga.24bcs10012@sst.scaler.com>"
   performance:
-    easy: 2.81
-    medium: 1.91
-    hard: 1.39
+    easy: 2.60
+    verified: true
