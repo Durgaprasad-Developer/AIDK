@@ -6,3 +6,5 @@ INFO:     Uvicorn running on http://0.0.0.0:7860 (Press CTRL+C to quit)
   data = input.dict() if input else {}
 INFO:     127.0.0.1:41496 - "POST /reset HTTP/1.1" 200 OK
 INFO:     127.0.0.1:41504 - "POST /step HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42956 - "POST /reset HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42970 - "POST /step HTTP/1.1" 200 OK

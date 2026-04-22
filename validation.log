@@ -1,0 +1,145 @@
+--- TEST 1: ENV WRAPPER ---
+AIDKEnv Reset Successful. Initial Obs: {'observation': [(4, 1, 0, 0, 0, 0, 1, -1, 2, 2, 2, 2), (2, 0, 0, 0, 0, 0, 0, -1, -2, -2, 2, 1)]}
+Current State Check: {'agent_0_state': (4, 1, 0, 0, 0, 0, 1, -1, 2, 2, 2, 2)}
+Traceback (most recent call last):
+  File "/home/durga-prasad/Navigation-env/env/openenv_wrapper.py", line 54, in <module>
+    print(f"Step Result: Done={done}, Delivs={info['total_deliveries']}")
+                                              ~~~~^^^^^^^^^^^^^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+
+--- TEST 4: BENCHMARK ---
+
+🚩 AIDK BRUTAL BENCHMARK: Random vs Trained 🚩
+==================================================
+✅ Loaded Knowledge Base: 968962 entries.
+Testing Random Baseline (150 steps)...
+Seed 1 (R): 0 delivs
+Seed 7 (R): 0 delivs
+Seed 42 (R): 0 delivs
+Seed 99 (R): 0 delivs
+Seed 123 (R): 0 delivs
+
+Testing Trained Expert (150 steps)...
+Seed 1 (T): 3 delivs
+Seed 7 (T): 2 delivs
+Seed 42 (T): 2 delivs
+Seed 99 (T): 3 delivs
+Seed 123 (T): 3 delivs
+
+==================================================
+Seed       | Random          | Trained        
+--------------------------------------------------
+1          | 0               | 3              
+7          | 0               | 2              
+42         | 0               | 2              
+99         | 0               | 3              
+123        | 0               | 3              
+--------------------------------------------------
+AVERAGE    | 0.00            | 2.60           
+==================================================
+🚀 TECHNICAL IMPROVEMENT: 260000000.0%
+==================================================
+
+
+--- TEST 5: TRACE ---
+
+🔍 --- 1 SEED TRACE (Seed = 1) --- 🔍
+🧠 MODEL CONFIRMATION: 968962 entries
+
+Initial Grid Positions: [(2, 1), (4, 5)] | Goal: (0, 4) | Tasks: [(7, 0), (6, 5), (6, 2)]
+Step 01 | S0 (dx,dy): (4,1) | Acts: [1, 1] | TotalDeliv: 0
+Step 02 | S0 (dx,dy): (3,1) | Acts: [3, 1] | TotalDeliv: 0
+Step 03 | S0 (dx,dy): (3,0) | Acts: [5, 4] | TotalDeliv: 0
+Step 04 | S0 (dx,dy): (3,0) | Acts: [1, 2] | TotalDeliv: 0
+Step 05 | S0 (dx,dy): (2,0) | Acts: [1, 0] | TotalDeliv: 0
+Step 06 | S0 (dx,dy): (1,0) | Acts: [1, 0] | TotalDeliv: 0
+Step 07 | S0 (dx,dy): (0,0) | Acts: [4, 0] | TotalDeliv: 0
+Step 08 | S0 (dx,dy): (-4,2) | Acts: [3, 0] | TotalDeliv: 0
+Step 09 | S0 (dx,dy): (-4,1) | Acts: [3, 0] | TotalDeliv: 0
+Step 10 | S0 (dx,dy): (-4,0) | Acts: [3, 0] | TotalDeliv: 0
+Step 11 | S0 (dx,dy): (-4,-1) | Acts: [0, 5] | TotalDeliv: 1
+
+🎯 FIRST DELIVERY ACHIEVED AT STEP 11! 🏆
+
+--- TEST 6: LLM INTEGRATION ---
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+🏁 --- STARTING LLM ALIGNMENT PROOF --- 🏁
+⏳ Loading model: sshleifer/tiny-gpt2
+Loading weights:   0%|          | 0/29 [00:00<?, ?it/s]Loading weights: 100%|██████████| 29/29 [00:00<00:00, 17109.98it/s]
+[1mGPT2LMHeadModel LOAD REPORT[0m from: sshleifer/tiny-gpt2
+Key                                   | Status     |  | 
+--------------------------------------+------------+--+-
+transformer.h.{0, 1}.attn.masked_bias | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Setting `pad_token_id` to `eos_token_id`:50256 for open-end generation.
+🤖 LLM Output: Task: Warehouse Navigation. Observation: [(4, 1, 0, 0, 0, 0, 1, -1, 2, 2, 2, 2), (2, 0, 0, 0, 0, 0, 0, -1, -2, -2, 2, 1)]. Action: stairs stairs stairs stairs stairs
+🛠️ Action Mapped: [4, 4]
+💰 Reward: -20.7
+📦 Done: False
+✅ LLM → ACTION → ENV → REWARD LOOP VERIFIED
+
+--- TEST 7: INFERENCE TEST ---
+✅ Inference Finished | Seed: 741 | Steps: 100 | Deliveries: 2
+
+--- TEST 8: OPENENV VALIDATION ---
+[FAIL] Navigation-env: Not ready for multi-mode deployment
+
+Issues found:
+  - server/app.py missing main() function
+  - server/app.py main() function not callable (missing if __name__ == '__main__')
+OpenEnv Validate Exit Code: 1
+
+--- TEST 9: STRESS TEST (10X) ---
+✅ Inference Finished | Seed: 860 | Steps: 100 | Deliveries: 0
+✅ Inference Finished | Seed: 703 | Steps: 100 | Deliveries: 3
+✅ Inference Finished | Seed: 882 | Steps: 100 | Deliveries: 3
+✅ Inference Finished | Seed: 10 | Steps: 100 | Deliveries: 3
+✅ Inference Finished | Seed: 167 | Steps: 100 | Deliveries: 3
+Traceback (most recent call last):
+  File "/home/durga-prasad/Navigation-env/inference/run.py", line 39, in <module>
+    run_inference(seed=s)
+  File "/home/durga-prasad/Navigation-env/inference/run.py", line 18, in run_inference
+    q_table = pickle.load(f)
+              ^^^^^^^^^^^^^^
+KeyboardInterrupt
+
+--- TEST 8: OPENENV VALIDATION (FIXED) ---
+[OK] Navigation-env: Ready for multi-mode deployment
+
+--- TEST 9: STRESS TEST (10X - RERUN) ---
+✅ Inference Finished | Seed: 524 | Steps: 100 | Deliveries: 0
+✅ Inference Finished | Seed: 850 | Steps: 100 | Deliveries: 3
+✅ Inference Finished | Seed: 493 | Steps: 100 | Deliveries: 3
+✅ Inference Finished | Seed: 295 | Steps: 100 | Deliveries: 1
+✅ Inference Finished | Seed: 654 | Steps: 100 | Deliveries: 0
+Traceback (most recent call last):
+  File "/home/durga-prasad/Navigation-env/inference/run.py", line 39, in <module>
+    run_inference(seed=s)
+  File "/home/durga-prasad/Navigation-env/inference/run.py", line 17, in run_inference
+    with open(q_path, "rb") as f:
+KeyboardInterrupt
+
+--- TEST 6: LLM INTEGRATION (VERIFIED) ---
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+🏁 --- STARTING LLM ALIGNMENT PROOF --- 🏁
+⏳ Loading model: sshleifer/tiny-gpt2
+Loading weights:   0%|          | 0/29 [00:00<?, ?it/s]Loading weights: 100%|██████████| 29/29 [00:00<00:00, 13242.77it/s]
+[1mGPT2LMHeadModel LOAD REPORT[0m from: sshleifer/tiny-gpt2
+Key                                   | Status     |  | 
+--------------------------------------+------------+--+-
+transformer.h.{0, 1}.attn.masked_bias | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+Setting `pad_token_id` to `eos_token_id`:50256 for open-end generation.
+🤖 LLM Output: Task: Warehouse Navigation. Observation: [(4, 1, 0, 0, 0, 0, 1, -1, 2, 2, 2, 2), (2, 0, 0, 0, 0, 0, 0, -1, -2, -2, 2, 1)]. Action: stairs stairs stairs stairs stairs
+🛠️ Action Mapped: [4, 4]
+💰 Reward: -20.7
+📦 Done: False
+✅ LLM → ACTION → ENV → REWARD LOOP VERIFIED
+
+--- TEST 2: LOCAL API TEST (RETRY) ---
