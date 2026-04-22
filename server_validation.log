@@ -1,0 +1,12 @@
+INFO:     Started server process [51367]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:7860 (Press CTRL+C to quit)
+/home/durga-prasad/Navigation-env/server/app.py:146: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+  data = input.dict() if input else {}
+INFO:     127.0.0.1:56376 - "POST /reset HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56384 - "POST /step HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [51367]
