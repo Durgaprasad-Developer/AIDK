@@ -1,9 +1,10 @@
 ---
-title: AIDK - Autonomous Industrial Decision Kernel
+title: AIDK Navigation Env
 emoji: 🚀
 colorFrom: blue
-colorTo: indigo
+colorTo: green
 sdk: docker
+app_port: 7860
 pinned: false
 ---
 
