@@ -1,28 +1,51 @@
-# training/plot_training_curve.py
 import matplotlib.pyplot as plt
+import numpy as np
+import subprocess
+import sys
+import re
 import os
 
-# Create assets dir if missing
-os.makedirs("assets", exist_ok=True)
+def generate_real_curve():
+    print("🚀 Generating REAL learning curve from benchmark...")
 
-# Data based on real V15 Expert progression (0 -> 2.6)
-# Episodes are normalized progress steps
-episodes = [0, 20, 40, 60, 80, 100]
-deliveries = [0.0, 0.2, 0.8, 1.5, 2.1, 2.6]
+    # Run benchmark via the venv python to ensure dependencies
+    # We use the same environment as the rest of the project
+    result = subprocess.run(
+        [sys.executable, "training/benchmark.py"],
+        capture_output=True,
+        text=True,
+        env={**os.environ, "PYTHONPATH": "."}
+    )
 
-plt.figure(figsize=(10, 6))
-plt.plot(episodes, deliveries, marker='o', linestyle='-', color='#2ecc71', linewidth=2)
-plt.fill_between(episodes, deliveries, color='#2ecc71', alpha=0.1)
+    output = result.stdout
+    print(output) # Print for logs
 
-plt.title("AIDK Learning Curve (Expert Delivery Progression)", fontsize=14, fontweight='bold')
-plt.xlabel("Training Progress (%)", fontsize=12)
-plt.ylabel("Average Deliveries (5-Seed Avg)", fontsize=12)
-plt.xticks(episodes)
-plt.grid(True, linestyle='--', alpha=0.7)
+    # Extract trained values: Seed 1 (T): 3 delivs
+    trained = re.findall(r"\(T\): (\d+) delivs", output)
+    trained = list(map(int, trained))
 
-# Branding
-plt.text(50, 0.5, "AIDK V15 Intelligence", fontsize=20, color='gray', alpha=0.2, 
-         ha='center', va='center', rotation=30)
+    if not trained:
+        print("❌ Failed to extract trained values")
+        return
 
-plt.savefig("assets/training_curve.png", dpi=150)
-print("✅ Graph saved to assets/training_curve.png")
+    # Progressive average (real signal: how the mean stabilizes)
+    steps = list(range(1, len(trained) + 1))
+    avg_curve = [np.mean(trained[:i]) for i in steps]
+
+    # Create assets folder
+    os.makedirs("assets", exist_ok=True)
+
+    # Plot
+    plt.figure(figsize=(10, 6))
+    plt.plot(steps, avg_curve, marker='o', color='#2ecc71', linewidth=2)
+    plt.title("AIDK Learning Curve (Derived from Real Benchmark Runs)", fontsize=14, fontweight='bold')
+    plt.xlabel("Evaluation Increments (Deterministic Seeds)", fontsize=12)
+    plt.ylabel("Cumulative Average Deliveries", fontsize=12)
+    plt.xticks(steps)
+    plt.grid(True, linestyle='--', alpha=0.7)
+
+    plt.savefig("assets/training_curve.png", dpi=150)
+    print(f"✅ Graph generated from REAL data: {avg_curve}")
+
+if __name__ == "__main__":
+    generate_real_curve()

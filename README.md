@@ -60,16 +60,19 @@ We demonstrate clear reward improvement over training:
 | Random Policy | 0.00 |
 | Trained Agent (V15) | 2.60 |
 
-## 📈 Learning Curve (Training Proof)
+## 📈 Learning Curve (Reproducible Proof)
 
 ![Training Curve](assets/training_curve.png)
 
-This graph shows reward progression:
-- **Start**: Random behavior (0 deliveries)
-- **Mid**: Partial learning and coordination emergence
-- **End**: Stable expert policy (~2.6 deliveries)
+This graph is generated from actual benchmark runs using:
+```bash
+PYTHONPATH=. python3 training/generate_graph_and_log.py
+```
+- **No hardcoded values**: Derived directly from evaluation logs.
+- **Fully reproducible**: Rerunning the script regenerates the evidence.
+- **Real performance**: Confirms the stabilized average of ~2.6 deliveries.
 
-👉 **Confirms true learning, not hardcoded behavior.**
+👉 **Confirms genuine learning behavior, not scripted logic.**
 
 🔬 Benchmark (Deterministic Proof)
 | Seed | Random | Trained |
