@@ -38,10 +38,22 @@ def test_trl():
     subprocess.run([sys.executable, "training/trl_llm_alignment.py"], check=True)
     print("✅ TRL OK")
 
+def test_stability():
+    print("⏳ Stress Testing (10x Stability)...")
+    for i in range(10):
+        # Using inference/run.py as the entrypoint
+        subprocess.run([sys.executable, "inference/run.py"], check=True)
+    print("✅ STABILITY OK")
+
 if __name__ == "__main__":
     print("🚀 RUNNING FULL VALIDATION...\n")
-    test_env_wrapper()
-    test_api()
-    test_benchmark()
-    test_trl()
-    print("\n🏆 ALL TESTS PASSED")
+    try:
+        test_env_wrapper()
+        test_api()
+        test_benchmark()
+        test_trl()
+        test_stability()
+        print("\n🏆 ALL TESTS PASSED")
+    except Exception as e:
+        print(f"\n❌ VALIDATION FAILED: {e}")
+        sys.exit(1)

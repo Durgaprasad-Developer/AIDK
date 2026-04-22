@@ -91,7 +91,14 @@ class GridEnv:
 
     def step(self, actions):
         """🛡️ V14 WINNING REWARD (Anti-Mimicry + Hyper Penalty)"""
+        if not isinstance(actions, (list, tuple)) or len(actions) != self.num_agents:
+            raise ValueError(f"Invalid actions format. Expected list of length {self.num_agents}")
+
         self.step_count += 1
+        
+        # 🛡️ Safety Limit (Meta Compliance)
+        if self.step_count > 150:
+            done = True
         rewards = []; dones = []
         deliv_in_step = 0
         

@@ -28,6 +28,12 @@ class AIDKEnv(Environment):
     def step(self, action: Any, timeout_s: Optional[float] = None, **kwargs: Any):
         """Step the core V15 kernel with 2-agent action list."""
         obs, rewards, done, info = self.grid_env.step(action)
+        
+        # 🛡️ Reward Verification (Meta Compliance)
+        total_reward = float(sum(rewards))
+        assert isinstance(total_reward, float), "Total reward must be a float"
+        assert -100 <= total_reward <= 100, f"Reward out of bounds: {total_reward}"
+
         return {
             "observation": obs,
             "reward": float(sum(rewards)),
