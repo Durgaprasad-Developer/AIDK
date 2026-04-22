@@ -1,0 +1,23 @@
+
+🚀 STARTING V15 PHASE: EASY (5000 eps)
+V15 easy | Ep 1000  | avg reward: -476.73 | deliveries: 0.23
+V15 easy | Ep 2000  | avg reward: -234.43 | deliveries: 1.58
+V15 easy | Ep 3000  | avg reward: -102.60 | deliveries: 2.48
+V15 easy | Ep 4000  | avg reward:  -27.88 | deliveries: 2.71
+V15 easy | Ep 5000  | avg reward:   11.20 | deliveries: 2.74
+
+🚀 STARTING V15 PHASE: MEDIUM (5000 eps)
+V15 medium | Ep 1000  | avg reward: -156.40 | deliveries: 1.44
+V15 medium | Ep 2000  | avg reward: -131.42 | deliveries: 1.63
+V15 medium | Ep 3000  | avg reward: -120.02 | deliveries: 1.71
+V15 medium | Ep 4000  | avg reward:  -92.11 | deliveries: 1.87
+V15 medium | Ep 5000  | avg reward:  -71.08 | deliveries: 1.95
+
+🚀 STARTING V15 PHASE: HARD (5000 eps)
+V15 hard | Ep 1000  | avg reward: -113.62 | deliveries: 1.22
+V15 hard | Ep 2000  | avg reward:  -83.68 | deliveries: 1.31
+V15 hard | Ep 3000  | avg reward:  -71.36 | deliveries: 1.30
+V15 hard | Ep 4000  | avg reward:  -64.28 | deliveries: 1.32
+V15 hard | Ep 5000  | avg reward:  -39.09 | deliveries: 1.47
+
+✅ V15 Asymmetric Curriculum complete. Kernel Saved in models/

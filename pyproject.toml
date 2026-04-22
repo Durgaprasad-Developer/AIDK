@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "navigation-env"
+version = "1.0.0"
+description = "Navigation environment for evaluating agent reasoning"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi==0.110.0",
+    "uvicorn==0.29.0",
+    "openai==2.7.2",
+    "openenv-core==0.2.0"
+]
+
+[project.scripts]
+server = "server.app:main"
