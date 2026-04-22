@@ -1,0 +1,32 @@
+
+🚩 AIDK BRUTAL BENCHMARK: Random vs Trained 🚩
+==================================================
+✅ Loaded Knowledge Base: 968962 entries.
+Testing Random Baseline (150 steps)...
+Seed 1 (R): 0 delivs
+Seed 7 (R): 0 delivs
+Seed 42 (R): 0 delivs
+Seed 99 (R): 0 delivs
+Seed 123 (R): 0 delivs
+
+Testing Trained Expert (150 steps)...
+Seed 1 (T): 0 delivs
+Seed 7 (T): 0 delivs
+Seed 42 (T): 0 delivs
+Seed 99 (T): 0 delivs
+Seed 123 (T): 0 delivs
+
+==================================================
+Seed       | Random          | Trained        
+--------------------------------------------------
+1          | 0               | 0              
+7          | 0               | 0              
+42         | 0               | 0              
+99         | 0               | 0              
+123        | 0               | 0              
+--------------------------------------------------
+AVERAGE    | 0.00            | 0.00           
+==================================================
+🚀 TECHNICAL IMPROVEMENT: 0.0%
+==================================================
+
