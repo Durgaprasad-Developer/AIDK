@@ -19,8 +19,8 @@ class AIDKEnv(Environment):
         self.grid_env = GridEnv(get_task())
 
     def reset(self, seed: Optional[int] = None, episode_id: Optional[str] = None, **kwargs: Any):
-        """Reset the core V15 kernel."""
-        obs = self.grid_env.reset(seed=seed)
+        """Reset the core V15 kernel (Expert mode by default for benchmarks)."""
+        obs = self.grid_env.reset(seed=seed, mode="expert")
         return {
             "observation": obs
         }

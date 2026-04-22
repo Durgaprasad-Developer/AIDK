@@ -1,4 +1,4 @@
-import sys, pickle, random
+import sys, pickle, random, numpy as np
 sys.path.insert(0, '.')
 
 from env.core.environment import GridEnv
@@ -13,6 +13,8 @@ PHASE_EPS = 5000
 NUM_AGENTS = 2
 shared_q = {}
 agent = QLearningAgent(ACTIONS, alpha=0.15, gamma=0.9, shared_q_table=shared_q)
+
+all_rewards_log = []
 
 def run_phase(phase_name, task_fn, episodes):
     print(f"\n🚀 STARTING V15 PHASE: {phase_name.upper()} ({episodes} eps)")
@@ -29,14 +31,11 @@ def run_phase(phase_name, task_fn, episodes):
         while not done and steps < 100:
             steps += 1
             
-            # 🛡️ ASYMMETRIC TRAINING RECOGNITION
             actions = []
             for i, s in enumerate(states):
-                # 🛡️ 1% Exploration Noise (User Fix 2)
                 if random.random() < 0.01:
                     actions.append(random.choice(ACTIONS))
                 else:
-                    # 🛡️ Asymmetric Tie-Breaking (User Original Fix)
                     actions.append(agent.get_action(s, agent_idx=i))
             
             ns_list, r_list, done, info = env.step(actions)
@@ -47,6 +46,7 @@ def run_phase(phase_name, task_fn, episodes):
         
         agent.decay_epsilon(0.9994)
         window_rewards.append(total_r)
+        all_rewards_log.append(total_r)
         window_deliveries.append(env.total_deliveries)
 
         if ep % 1000 == 0:
@@ -59,8 +59,13 @@ run_phase("easy", easy_task, PHASE_EPS)
 run_phase("medium", medium_task, PHASE_EPS)
 run_phase("hard", hard_task, PHASE_EPS)
 
-# 🧠 Load the Asymmetric V15 Kernel
+# 🧠 Save the Asymmetric V15 Kernel
 Q_TABLE_PATH = "models/asymmetric_v15_q_table.pkl"
 with open(Q_TABLE_PATH, "wb") as f:
     pickle.dump(shared_q, f)
-print("\n✅ V15 Asymmetric Curriculum complete. Kernel Saved in models/")
+
+# 📊 Save REAL training logs
+LOG_PATH = "training_rewards.npy"
+np.save(LOG_PATH, np.array(all_rewards_log))
+
+print(f"\n✅ V15 Asymmetric Curriculum complete. Kernel Saved. Logs saved to {LOG_PATH}")
