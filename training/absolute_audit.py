@@ -121,9 +121,16 @@ def test_inference_performance():
     from env.tasks.easy import get_task
     with open("models/asymmetric_v15_q_table.pkl", "rb") as f:
         q_table = pickle.load(f)
-    env = GridEnv(get_task())
-    info = audit_run_episode(env, q_table, seed=42)
-    if info['total_deliveries'] < 1: return f"System failed to deliver even 1 item (0). Seed 42."
+    
+    scores = []
+    for seed in [1, 7, 42, 99, 123]:
+        env = GridEnv(get_task())
+        info = audit_run_episode(env, q_table, seed)
+        scores.append(info['total_deliveries'])
+
+    avg = sum(scores) / len(scores)
+    if avg < 1:
+        return f"Low average performance: {avg}"
     return True
 
 def test_coordination_diversity():
