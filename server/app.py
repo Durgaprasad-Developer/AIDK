@@ -1,6 +1,7 @@
 # server/app.py
 
-from fastapi import FastAPI, HTTPException, Body
+from fastapi import FastAPI, HTTPException, Body, Response
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, Any, List
@@ -162,7 +163,13 @@ def step(input: ActionInput):
     if not env:
         raise HTTPException(status_code=400, detail="Not initialized")
 
-    _, rewards, done, info = env.step(input.actions)
+    try:
+        _, rewards, done, info = env.step(input.actions)
+    except Exception as e:
+        return JSONResponse(
+            status_code=400,
+            content={"error": str(e)}
+        )
 
     return {
         "observation": _build_obs(env),
