@@ -8,9 +8,9 @@ app_file: app.py
 pinned: false
 ---
 
-<p align="center">
+# 🏭 AIDK — Autonomous Industrial Decision Kernel
 
-## 🏭 AIDK — Autonomous Industrial Decision Kernel
+<p align="center">
 
 <img src="https://img.shields.io/badge/Python-3.10-blue" />
 <img src="https://img.shields.io/badge/OpenEnv-Compatible-green" />
