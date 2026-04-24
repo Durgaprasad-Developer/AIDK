@@ -36,7 +36,7 @@ https://huggingface.co/spaces/bdurgaprasadreddy/Navigation_env
 
 ## 🚀 Live Demo (Run Environment)
 
-👉 Hugging Face Space:  
+👉 Run Live Environment:  
 https://bdurgaprasadreddy-navigation-env.hf.space
 
 ---
