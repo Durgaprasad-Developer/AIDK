@@ -10,14 +10,26 @@ pinned: false
 
 # 🏭 AIDK — Autonomous Industrial Decision Kernel
 
-![Python](https://img.shields.io/badge/Python-3.10-blue)
-![OpenEnv](https://img.shields.io/badge/OpenEnv-Compatible-green)
-![PyTorch](https://img.shields.io/badge/PyTorch-RL-orange)
-![HuggingFace](https://img.shields.io/badge/HuggingFace-Spaces-yellow)
+<p align="center">
+
+<h1>🏭 AIDK — Autonomous Industrial Decision Kernel</h1>
+
+<p>
+  <img src="https://img.shields.io/badge/Python-3.10-blue" />
+  <img src="https://img.shields.io/badge/OpenEnv-Compatible-green" />
+  <img src="https://img.shields.io/badge/PyTorch-RL-orange" />
+  <img src="https://img.shields.io/badge/HuggingFace-Spaces-yellow" />
+</p>
+
+<p><b>A system where agents cannot exploit rewards and must learn real coordination under constraints.</b></p>
+
+</p>
 
 > A system where agents cannot exploit rewards and must learn real coordination under constraints.
 
 > A verifiable multi-agent reinforcement learning environment for real-world warehouse coordination.
+
+> Designed to test real decision-making, not memorization.
 
 ---
 
@@ -143,6 +155,8 @@ The reward system is engineered to prevent cheating:
 - **Anti-oscillation penalty** → prevents looping
 
 Only efficient task completion yields high reward.
+Reward is sparse and delayed, requiring multi-step planning.
+This forces agents to learn multi-step planning instead of greedy optimization.
 
 ---
 
@@ -191,7 +205,7 @@ TRAINED  → Reward: -292.90 | Deliveries: 2.60
 | Random | -441.13 | 0.10 |
 | Idle | -1171.17 | 0.00 |
 | Oscillation | -274.00 | 0.00 |
-| **Expert** | **-414.37** | **2.60** |
+| **Trained Policy** | **-292.90** | **2.60** |
 
 **Insight**: 
 - Empirical tests show that degenerate strategies (idle, oscillation, random) fail to achieve meaningful reward, indicating strong resistance to reward exploitation.
@@ -203,7 +217,7 @@ TRAINED  → Reward: -292.90 | Deliveries: 2.60
 
 We use **Tabular Q-Learning** to learn optimal decision policies.
 
-$$Q(s, a) \leftarrow Q(s, a) + \alpha [ r + \gamma \max Q(s', a') - Q(s, a) ]$$
+Q(s, a) ← Q(s, a) + α [ r + γ max Q(s', a') − Q(s, a) ]
 
 ### Why Q-Learning?
 - **Fully interpretable**: No black-box behavior
