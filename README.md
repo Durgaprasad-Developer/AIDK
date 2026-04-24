@@ -8,20 +8,14 @@ app_file: app.py
 pinned: false
 ---
 
-# 🏭 AIDK — Autonomous Industrial Decision Kernel
-
 <p align="center">
 
-<h1>🏭 AIDK — Autonomous Industrial Decision Kernel</h1>
+## 🏭 AIDK — Autonomous Industrial Decision Kernel
 
-<p>
-  <img src="https://img.shields.io/badge/Python-3.10-blue" />
-  <img src="https://img.shields.io/badge/OpenEnv-Compatible-green" />
-  <img src="https://img.shields.io/badge/PyTorch-RL-orange" />
-  <img src="https://img.shields.io/badge/HuggingFace-Spaces-yellow" />
-</p>
-
-<p><b>A system where agents cannot exploit rewards and must learn real coordination under constraints.</b></p>
+<img src="https://img.shields.io/badge/Python-3.10-blue" />
+<img src="https://img.shields.io/badge/OpenEnv-Compatible-green" />
+<img src="https://img.shields.io/badge/PyTorch-RL-orange" />
+<img src="https://img.shields.io/badge/HuggingFace-Spaces-yellow" />
 
 </p>
 
