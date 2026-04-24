@@ -10,6 +10,13 @@ pinned: false
 
 # 🏭 AIDK — Autonomous Industrial Decision Kernel
 
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![OpenEnv](https://img.shields.io/badge/OpenEnv-Compatible-green)
+![PyTorch](https://img.shields.io/badge/PyTorch-RL-orange)
+![HuggingFace](https://img.shields.io/badge/HuggingFace-Spaces-yellow)
+
+> A system where agents cannot exploit rewards and must learn real coordination under constraints.
+
 > A verifiable multi-agent reinforcement learning environment for real-world warehouse coordination.
 
 ---
@@ -69,6 +76,19 @@ Most RL environments simplify these constraints, producing agents that fail in r
 - Energy-constrained planning
 - Anti-reward-hacking design
 
+### Long-Horizon Decision Making
+
+Agents must solve delayed-reward tasks:
+
+- Navigate to pickup location  
+- Carry item under energy constraints  
+- Avoid collisions and invalid moves  
+- Deliver to goal efficiently  
+
+Reward is only maximized when the full sequence (pickup → delivery) is completed efficiently.
+
+This makes AIDK a **long-horizon coordination problem**, not a single-step optimization task.
+
 ---
 
 ## 🌍 Environment Overview
@@ -95,12 +115,20 @@ Most RL environments simplify these constraints, producing agents that fail in r
 from env.openenv_wrapper import AIDKEnv
 
 env = AIDKEnv()
+
 obs = env.reset(seed=1)
 
-result = env.step([0, 1]) # Action list for agents
+done = False
+total_reward = 0
 
-reward = result["reward"]
-done = result["done"]
+while not done:
+    actions = [0, 1]
+    result = env.step(actions)
+
+    total_reward += result["reward"]
+    done = result["done"]
+
+print("Episode Reward:", total_reward)
 ```
 
 ---
@@ -126,13 +154,27 @@ Only efficient task completion yields high reward.
 | Random | -435.19 | 0.16 |
 | **Trained (Q-learning)** | **-292.90** | **2.60** |
 
-### 📊 Training Curve
+### 📊 Reward Curve (Learning Progress)
 
-![Training Curve](https://raw.githubusercontent.com/Durgaprasad-Developer/navigation-env/main/assets/training_curve.png)
+![Reward Curve](assets/reward_curve.png)
 
-- **Grey** → raw reward (noisy, stochastic env)
-- **Green** → moving average (window=100)
-- **Upward trend** → agent is learning
+- Grey → raw reward (stochastic environment)
+- Orange → smoothed reward (moving average)
+- Trend → clear upward progression
+
+The agent transitions from inefficient exploration to coordinated task execution, demonstrating learned decision-making under stochastic constraints.
+
+---
+
+### 📉 Loss Curve (TD Error Convergence)
+
+![Loss Curve](assets/loss_curve.png)
+
+- Grey → raw temporal difference error  
+- Orange → smoothed loss curve  
+- Trend → consistent decrease toward zero  
+
+This confirms Q-value stabilization and convergence of the learning process.
 
 ### 🧪 Real Output
 ```text
@@ -152,7 +194,7 @@ TRAINED  → Reward: -292.90 | Deliveries: 2.60
 | **Expert** | **-414.37** | **2.60** |
 
 **Insight**: 
-- No reward exploitation possible
+- Empirical tests show that degenerate strategies (idle, oscillation, random) fail to achieve meaningful reward, indicating strong resistance to reward exploitation.
 - Only meaningful behavior is rewarded
 
 ---
@@ -247,3 +289,62 @@ Reward system penalizes these behaviors, guiding policy stabilization.
 - **Q-learning** (Core Reasoner)
 - **Hugging Face Spaces** (Production)
 - **Transformers** (TRL Compatibility Proof)
+
+---
+
+## ⚙️ Setup & Run Locally
+
+```bash
+git clone https://github.com/Durgaprasad-Developer/AIDK.git
+cd AIDK
+
+python3 -m venv venv
+source venv/bin/activate
+
+pip install -r requirements.txt
+```
+### ▶️ Run Server
+```bash
+uvicorn server.app:app --reload
+```
+### 🧪 Test API
+```bash
+# Health
+curl http://localhost:8000/health
+
+# Reset
+curl -X POST http://localhost:8000/reset \
+-H "Content-Type: application/json" \
+-d '{}'
+
+# Step
+curl -X POST http://localhost:8000/step \
+-H "Content-Type: application/json" \
+-d '{"actions":[0,1]}'
+```
+
+---
+
+## 🤖 Run Trained Policy
+
+```bash
+ENV_URL=http://localhost:8000 python inference.py
+```
+Runs trained Q-policy and prints step-by-step rewards.
+
+
+---
+
+## ✅ Validation
+
+- API returns valid observations and rewards  
+- Invalid inputs return structured 400 errors  
+- Stochastic transitions verified across runs  
+- Reward trends improve over training  
+- TD error converges over time  
+
+---
+
+## 🧠 Final Insight
+
+AIDK is not just an environment — it is a decision verification system where intelligent behavior is the only path to reward.
