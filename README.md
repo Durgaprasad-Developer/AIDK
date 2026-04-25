@@ -331,18 +331,22 @@ uvicorn server.app:app --reload
 ```
 ### 🧪 Test API
 ```bash
-# Health
+# 1. Health Check
 curl http://localhost:8000/health
 
-# Reset
+# 2. Reset Environment
 curl -X POST http://localhost:8000/reset \
 -H "Content-Type: application/json" \
 -d '{}'
 
-# Step
+# 3. Get Current State (Observation)
+curl -s http://localhost:8000/state
+
+# 4. Execute Step
 curl -X POST http://localhost:8000/step \
 -H "Content-Type: application/json" \
 -d '{"actions":[0,1]}'
+
 ```
 
 ---
