@@ -51,7 +51,7 @@ https://huggingface.co/spaces/bdurgaprasadreddy/AIDK-Blog
 ## 🧠 Colab Notebook link (TRL Compatibility)
 
 👉 Colab (Run yourself):  
-https://colab.research.google.com/drive/1wuBTly_cGSsb4tPQW9rnkyIZwG0CM0KR
+https://colab.research.google.com/drive/1vlCSJAViWl9ZVAwPJb-AcgBZ4nSTTphA?usp=sharing
 
 ---
 
