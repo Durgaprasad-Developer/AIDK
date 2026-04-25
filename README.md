@@ -57,7 +57,7 @@ https://colab.research.google.com/drive/1wuBTly_cGSsb4tPQW9rnkyIZwG0CM0KR
 
 ## 📦 Code repository link
 
-👉 Github Repo URL
+👉 Github Repo URL:
 https://github.com/Durgaprasad-Developer/AIDK
 
 ---
