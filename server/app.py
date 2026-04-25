@@ -60,7 +60,7 @@ def home():
         "message": "Multi-Agent RL System Active",
         "try_docs": "/docs",
         "health": "/health",
-        "endpoints": ["/reset", "/step", "/grader", "/reason"]
+        "endpoints": ["/reset", "/step", "/grader", "/reason", "/state"]
     }
 
 # ================================
