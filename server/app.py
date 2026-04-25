@@ -139,6 +139,16 @@ class GraderInput(BaseModel):
     pass
 
 # ================================
+# 🔍 STATE
+# ================================
+@app.get("/state")
+def get_state():
+    global env
+    if not env:
+        return {"state": "Not initialized"}
+    return {"state": env.get_elite_state(0)}
+
+# ================================
 # 🔄 RESET
 # ================================
 @app.post("/reset")
