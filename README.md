@@ -27,7 +27,7 @@ pinned: false
 
 ---
 
-## 📦 HuggingFace Space
+## 📦 Hugging Face Space URL
 
 👉 HuggingFace Space:  
 https://huggingface.co/spaces/bdurgaprasadreddy/Navigation_env
@@ -48,10 +48,17 @@ https://huggingface.co/spaces/bdurgaprasadreddy/AIDK-Blog
 
 ---
 
-## 🧠 Training Notebook (TRL Compatibility)
+## 🧠 Colab Notebook link (TRL Compatibility)
 
 👉 Colab (Run yourself):  
 https://colab.research.google.com/drive/1wuBTly_cGSsb4tPQW9rnkyIZwG0CM0KR
+
+---
+
+## 📦 Code repository link
+
+👉 Github Repo URL
+https://github.com/Durgaprasad-Developer/AIDK
 
 ---
 
