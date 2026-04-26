@@ -53,15 +53,15 @@ app = FastAPI(
 # ================================
 # 🏠 ROOT (NO MORE 'NOT FOUND')
 # ================================
-@app.get("/")
-def home():
-    return {
-        "status": "AIDK Running ✅",
-        "message": "Multi-Agent RL System Active",
-        "try_docs": "/docs",
-        "health": "/health",
-        "endpoints": ["/reset", "/step", "/grader", "/reason", "/state"]
-    }
+# @app.get("/")
+# def home():
+#     return {
+#         "status": "AIDK Running ✅",
+#         "message": "Multi-Agent RL System Active",
+#         "try_docs": "/docs",
+#         "health": "/health",
+#         "endpoints": ["/reset", "/step", "/grader", "/reason", "/state"]
+#     }
 
 # ================================
 # ❤️ HEALTH CHECK (IMPORTANT FOR HF)
